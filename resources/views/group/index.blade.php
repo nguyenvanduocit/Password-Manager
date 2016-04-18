@@ -22,7 +22,8 @@
                                 <td><a href="{{ route('password.index',['group'=>$group]) }}">{{ $group->name }}</a></td>
                                 <td>{{ $group->description }}</td>
                                 <td>
-                                    <a href="{{ route('group.edit', ['id'=>$group->id]) }}" class="btn btn-sm btn-warning" title="Edit">E</a>
+                                    <a href="{{ route('password.index',['group'=>$group]) }}" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye"></i></a>
+                                    <a href="{{ route('group.edit', ['id'=>$group->id]) }}" class="btn btn-sm btn-warning" title="Edit"><i class="fa fa-pencil"></i></a>
                                     <a href="{{ route('group.destroy', ["id" => $group->id]) }}" class="btn btn-sm btn-danger"  data-method="DELETE" data-confirm="Are you sure ?" data-token="{{ csrf_token() }}"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>

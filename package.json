@@ -4,7 +4,7 @@
     "gulp": "^3.8.8"
   },
   "dependencies": {
-    "bootstrap-sass": "^3.0.0",
+    "bootstrap-sass": "3.3.6",
     "clipboard": "1.5.10",
     "laravel-elixir": "^4.0.0",
     "notifyjs-browser": "github:notifyjs/notifyjs"

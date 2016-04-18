@@ -17,7 +17,7 @@ class Group extends Model
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
 	 */
     public function members(){
-	    return $this->belongsToMany('App\User');
+	    return $this->belongsToMany('App\User', 'group_user', 'group_id', 'user_id');
     }
 
 	/**
