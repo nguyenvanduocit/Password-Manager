@@ -22,15 +22,15 @@
                         </tr>
                         <tr>
                             <td>Username</td>
-                            <td>{{ $password->username }}</td>
+                            <td>{{ $password->username }}&nbsp;<a href="#" class="btn btn-xs btn-default btn-clipboard" data-clipboard-text="{{ $password->username }}"><i class="fa fa-clipboard"></i></a></td>
                         </tr>
                         <tr>
                             <td>Email</td>
-                            <td>{{ $password->email }}</td>
+                            <td>{{ $password->email }}&nbsp;<a href="#" class="btn btn-xs btn-default btn-clipboard" data-clipboard-text="{{ $password->email }}"><i class="fa fa-clipboard"></i></a></td>
                         </tr>
                         <tr>
                             <td>Password</td>
-                            <td>{{ $password->password }}</td>
+                            <td><a href="#" class="btn btn-xs btn-default btn-clipboard" data-clipboard-text="{{ $password->password }}"><i class="fa fa-clipboard"></i></a></td>
                         </tr>
                         <tr>
                             <td>Note</td>

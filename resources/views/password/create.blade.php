@@ -50,10 +50,13 @@
                 <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
                     <label for="username" class="col-sm-2 control-label">Password</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="password" name="password" placeholder="password" value="{{ old('password') }}">
-                        @if ($errors->has('password'))
-                            <span class="help-block"><strong>{{ $errors->first('password') }}</strong></span>
-                        @endif
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="password" value="{{ old('password') }}">
+                            @if ($errors->has('password'))
+                                <span class="help-block"><strong>{{ $errors->first('password') }}</strong></span>
+                            @endif
+                            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-eye"></i></span>
+                        </div>
                     </div>
                 </div>
 

@@ -15,18 +15,19 @@ class GroupController extends Controller
     public function index()
     {
 
-        $groups = Auth::user()->ownerGroups()->paginate(10);
+        $groups = Auth::user()->groups()->paginate(10);
         return view('group.index', ['groups' => $groups]);
     }
+
     public function create()
     {
         return view('group.create');
     }
+
     public function store()
     {
         $rules = [
-            'name' => 'required|unique:groups',
-            'description' => 'required',
+            'name' => 'required'
         ];
         $validator = Validator::make(Input::all(), $rules);
         if ($validator->fails()) {
@@ -35,25 +36,36 @@ class GroupController extends Controller
                            ->withInput();
         } else {
             $group = new Group(Input::only(['name', 'description']));
-            $currentUser = Auth::user();
-            $currentUser->ownerGroups()->save($group);
+            $group->save();
+
+            $memberDatas = [];
+            $members = Input::has('members')?Input::get('members'):[];
+            foreach ($members as $member){
+                $memberDatas[$member] = ['is_owner'=>0];
+            }
+
+            $owners = Input::has('owners')?Input::get('owners'):[];
+            foreach ($owners as $owner){
+                $memberDatas[$owner] = ['is_owner'=>1];
+            }
+
+            $group->members()->sync($memberDatas);
+
             return Redirect::to(route('group.edit', ['groupId' => $group->id]))->with(['success_message'=>'Created!']);
         }
     }
+
     public function edit($groupId)
     {
-        $group = Group::with(['owner', 'members'])->findOrFail($groupId);
-        if (Gate::denies('update', $group)) {
-            abort(403);
-        }
-
+        $group = Group::with(['owners', 'members'])->findOrFail($groupId);
+        $this->authorize('update', $group);
         return view('group.edit', ['group' => $group]);
     }
+    
     public function update($groupId)
     {
         $rules = [
-            'name' => 'required',
-            'description' => 'required',
+            'name' => 'required'
         ];
         $validator = Validator::make(Input::all(), $rules);
         if ($validator->fails()) {
@@ -61,22 +73,31 @@ class GroupController extends Controller
                            ->withErrors($validator)
                            ->withInput();
         }
-        $group = Group::with(['owner', 'members'])->findOrFail($groupId);
-        if (Gate::denies('update', $group)) {
-            abort(403);
-        }
+        $group = Group::with(['owners', 'members'])->findOrFail($groupId);
+        $this->authorize('update', $group);
         $group->name = Input::get('name');
         $group->description = Input::get('description');
-        $group->save();
-        \Session::flash('message', 'Update Success');
 
-        return Redirect::back();
+        $memberDatas = [];
+        $members = Input::has('members')?Input::get('members'):[];
+        foreach ($members as $member){
+            $memberDatas[$member] = ['is_owner'=>0];
+        }
+
+        $owners = Input::has('owners')?Input::get('owners'):[];
+        foreach ($owners as $owner){
+            $memberDatas[$owner] = ['is_owner'=>1];
+        }
+
+        $group->members()->sync($memberDatas);
+
+        $group->save();
+        return Redirect::back()->with(['success_message'=>'Updated!']);
     }
+
     public function destroy($groupId){
         $group = Group::findOrFail($groupId);
-        if (Gate::denies('destroy', $group)) {
-            abort(403);
-        }
+        $this->authorize('destroy', $group);
         $group->delete();
         return Redirect::to(route('group.index'))->with(['success_message'=>'Deleted!']);
     }

@@ -14,13 +14,9 @@ class CreateGroupsTable extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id');
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('description');
             $table->timestamps();
-            $table->index('user_id');
-            $table->foreign('user_id')->references('id')->on('users')
-                  ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

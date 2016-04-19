@@ -12,18 +12,16 @@ class GroupPolicy
 
     public function update(User $user, Group $group)
     {
-        return $this->isOwner($user, $group);
+        return $group->owners->contains($user);
     }
+
     public function show(User $user, Group $group)
     {
-        return $this->isOwner($user, $group);
+        return $group->members->contains($user) || $group->owners->contains($user);
     }
+
     public function destroy(User $user, Group $group)
     {
-        return $this->isOwner($user, $group);
-    }
-    protected function isOwner(User $user, Group $group)
-    {
-        return $user->id === $group->user_id;
+        return $group->owners->contains($user);
     }
 }

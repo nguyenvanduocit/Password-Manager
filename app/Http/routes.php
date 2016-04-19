@@ -23,5 +23,6 @@
 		Route::group( [ 'middleware' => [ 'auth' ] ], function () {
 			Route::resource( 'group', 'GroupController' );
 			Route::resource( 'password', 'PasswordController' );
+			Route::match(['get', 'post'],'search/user', 'UserController@search');
 		} );
 	} );

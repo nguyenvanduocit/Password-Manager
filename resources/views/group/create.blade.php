@@ -28,6 +28,33 @@
                         @endif
                     </div>
                 </div>
+                <div class="form-group{{ $errors->has('members') ? ' has-error' : '' }}">
+                    <label class="col-sm-2 control-label">Members</label>
+                    <div class="col-sm-10">
+                        <select name="members[]" data-tag="true" data-allow-clear="true" aria-multiselectable="true" class="form-control user-select" multiple="multiple" data-placeholder="Select a Member">
+                        </select>
+
+                        @if ($errors->has('members'))
+                            <span class="help-block">
+                                        <strong>{{ $errors->first('members') }}</strong>
+                                    </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="form-group{{ $errors->has('owners') ? ' has-error' : '' }}">
+                    <label class="col-sm-2 control-label">Owners</label>
+                    <div class="col-sm-10">
+                        <select name="owners[]" data-tag="true" data-allow-clear="true" aria-multiselectable="true" class="form-control user-select" multiple="multiple" data-placeholder="Select a Member">
+                            <option selected value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
+                        </select>
+
+                        @if ($errors->has('owners'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('owners') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-default">Create group</button>

@@ -9,15 +9,16 @@ class Group extends Model
 	protected $fillable = [
 		'name', 'description', 'user_id',
 	];
-	public function owner(){
-		return $this->belongsTo('App\User', 'user_id','id');
+	
+	public function owners(){
+		return $this->belongsToMany('App\User', 'group_user', 'group_id', 'user_id')->where('is_owner','=',1);
 	}
 	/**
 	 * Group's passwords
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
 	 */
     public function members(){
-	    return $this->belongsToMany('App\User', 'group_user', 'group_id', 'user_id');
+	    return $this->belongsToMany('App\User', 'group_user', 'group_id', 'user_id')->where('is_owner','<>',1);
     }
 
 	/**

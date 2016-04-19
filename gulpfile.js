@@ -20,6 +20,8 @@ elixir(function(mix) {
     mix.scripts([
         "destroylink.js",
         "password.js",
+        "group.js",
+        "user.js",
         "all.js"
     ]);
     mix.version(['public/js/all.js','public/js/vendor.js','public/css/app.css']);

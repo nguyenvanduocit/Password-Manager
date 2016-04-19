@@ -90,8 +90,6 @@ class AuthController extends Controller
 
         $allowedEmailDomains = config('auth.email.allowed_email_domains');
         if(count($allowedEmailDomains) > 0){
-            var_dump($allowedEmailDomains);
-            dd();
             $emailDomain = explode('@', $googleUser->email);
             $emailDomain = $emailDomain[1];
             if(!in_array($emailDomain, $allowedEmailDomains)){

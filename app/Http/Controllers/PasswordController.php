@@ -22,21 +22,25 @@ class PasswordController extends Controller
 		if($groupId = Input::get('group')){
 			$selectedGroup = Group::find($groupId);
 		}
-		$groups = Auth::user()->ownerGroups()->get();
 		if($selectedGroup){
+			if (Gate::denies('show', $selectedGroup)) {
+				return Redirect::back()->with(['error_message'=>"You do not have permission."]);
+			}
 			$passwords = $selectedGroup->passwords()->paginate( 10 );
 		}
 		else{
 			$passwords = Auth::user()->passwords()->paginate( 10 );
 		}
-
+		$groups = Auth::user()->groups()->get();
 		return view('password.index',['passwords'=>$passwords, 'groups'=>$groups, 'selectedGroup'=>$selectedGroup]);
 	}
+
 	public function create(){
 
-		$groups = Auth::user()->ownerGroups()->get();
+		$groups = Auth::user()->groups()->get();
 		return view('password.create',['groups'=>$groups]);
 	}
+
 	public function store(){
 		$rules = [
 			'title'=>'required',
@@ -65,9 +69,7 @@ class PasswordController extends Controller
 			}
 		])->findOrFail($passwordId);
 		$groups = Auth::user()->ownerGroups()->get();
-		if (Gate::denies('update', $password)) {
-			abort(403);
-		}
+		$this->authorize('destroy', $password);
 		$selectedGroups =[];
 		foreach ($password->groups as $group){
 			$selectedGroups[] = $group->id;
@@ -87,9 +89,7 @@ class PasswordController extends Controller
 			               ->withInput();
 		}
 		$password = Password::findOrFail($passwordId);
-		if (Gate::denies('update', $password)) {
-			abort(403);
-		}
+		$this->authorize('destroy', $password);
 		$password->title = Input::get('title');
 		$password->email = Input::get('email');
 		$password->password = Input::get('password');
@@ -107,16 +107,13 @@ class PasswordController extends Controller
 
 	public function show($passwordId){
 		$password = Password::with(['owner', 'groups'])->findOrFail($passwordId);
-		if (Gate::denies('show', $password)) {
-			abort(403);
-		}
+		$this->authorize('update', $password);
 		return view('password.show', ['password'=>$password]);
 	}
+
 	public function destroy($passwordId){
 		$password = Password::findOrFail($passwordId);
-		if (Gate::denies('destroy', $password)) {
-			abort(403);
-		}
+		$this->authorize('destroy', $password);
 		$password->delete();
 		return Redirect::to(route('password.index'))->with(['success_message'=>'Deleted.']);
 	}
