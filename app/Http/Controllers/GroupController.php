@@ -48,7 +48,7 @@ class GroupController extends Controller
             foreach ($owners as $owner){
                 $memberDatas[$owner] = ['is_owner'=>1];
             }
-
+            $memberDatas[Auth::user()->id] = ['is_owner'=>1];
             $group->members()->sync($memberDatas);
 
             return Redirect::to(route('group.edit', ['groupId' => $group->id]))->with(['success_message'=>'Created!']);
@@ -61,7 +61,7 @@ class GroupController extends Controller
         $this->authorize('update', $group);
         return view('group.edit', ['group' => $group]);
     }
-    
+
     public function update($groupId)
     {
         $rules = [
@@ -88,7 +88,6 @@ class GroupController extends Controller
         foreach ($owners as $owner){
             $memberDatas[$owner] = ['is_owner'=>1];
         }
-
         $group->members()->sync($memberDatas);
 
         $group->save();
