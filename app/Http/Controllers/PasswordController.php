@@ -43,9 +43,7 @@ class PasswordController extends Controller
 
 	public function store(){
 		$rules = [
-			'title'=>'required',
-			'email'=>'required',
-			'password'=>'required'
+			'title'=>'required'
 		];
 		$validator = Validator::make(Input::all(), $rules);
 		if ( $validator->fails() ) {
@@ -53,7 +51,7 @@ class PasswordController extends Controller
 			               ->withErrors( $validator )
 			               ->withInput();
 		}else{
-			$password = Auth::user()->passwords()->create(Input::only(['title','username','email','password','note','url']));
+			$password = Auth::user()->ownPasswords()->create(Input::only(['title','username','email','password','note','url']));
 			if(Input::get('groups')){
 				$password->groups()->sync(Input::get('groups'));
 			}
@@ -68,7 +66,7 @@ class PasswordController extends Controller
 				$query->select('id');
 			}
 		])->findOrFail($passwordId);
-		$groups = Auth::user()->ownerGroups()->get();
+		$groups = Auth::user()->ownGroups()->get();
 		$this->authorize('destroy', $password);
 		$selectedGroups =[];
 		foreach ($password->groups as $group){
@@ -107,7 +105,7 @@ class PasswordController extends Controller
 
 	public function show($passwordId){
 		$password = Password::with(['owner', 'groups'])->findOrFail($passwordId);
-		$this->authorize('update', $password);
+		$this->authorize('show', $password);
 		return view('password.show', ['password'=>$password]);
 	}
 

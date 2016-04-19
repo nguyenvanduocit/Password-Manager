@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserGroupTable extends Migration
+class CreateGroupPasswordTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,18 +12,17 @@ class CreateUserGroupTable extends Migration
      */
     public function up()
     {
-        Schema::create('group_user', function (Blueprint $table) {
-            $table->unsignedInteger('user_id');
+        Schema::create('group_password', function (Blueprint $table) {
+            $table->unsignedInteger('password_id');
             $table->unsignedInteger('group_id');
-            $table->unsignedInteger('is_owner');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')
+            $table->foreign('password_id')->references('id')->on('passwords')
                   ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('group_id')->references('id')->on('groups')
                   ->onUpdate('cascade')->onDelete('cascade');
 
-            $table->primary(['user_id', 'group_id']);
+            $table->primary(['password_id', 'group_id']);
         });
     }
 
@@ -34,6 +33,6 @@ class CreateUserGroupTable extends Migration
      */
     public function down()
     {
-        Schema::drop('group_user');
+        Schema::drop('group_password');
     }
 }

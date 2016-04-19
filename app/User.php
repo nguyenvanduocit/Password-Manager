@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -25,9 +26,15 @@ class User extends Authenticatable
     ];
 
     /**
-     * User passwords
+     * Add password user can view
      */
     public function passwords(){
+        return $this->hasMany('App\Password');
+    }
+    /**
+     * User passwords
+     */
+    public function ownPasswords(){
         return $this->hasMany('App\Password');
     }
     /**
@@ -35,5 +42,8 @@ class User extends Authenticatable
      */
     public function groups(){
         return $this->belongsToMany('App\Group', 'group_user', 'user_id', 'group_id');
+    }
+    public function ownGroups(){
+        return $this->belongsToMany('App\Group', 'group_user', 'user_id', 'group_id')->where('is_owner', "=", 1);
     }
 }
