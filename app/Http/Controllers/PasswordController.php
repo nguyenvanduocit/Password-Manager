@@ -115,4 +115,8 @@ class PasswordController extends Controller
 		$password->delete();
 		return Redirect::to(route('password.index'))->with(['success_message'=>'Deleted.']);
 	}
+	
+	public function search($term){
+
+	}
 }

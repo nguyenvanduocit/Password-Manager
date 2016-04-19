@@ -29,11 +29,11 @@
                                 </td>
                                 <td>
                                     @can("update", $group)
-                                    <a href="{{ route('group.edit', ['id'=>$group->id]) }}" class="btn btn-sm btn-default" title="Edit"><i class="fa fa-pencil"></i></a>
+                                    <a href="{{ route('group.edit', ['id'=>$group->id]) }}" class="btn btn-xs btn-default" title="Edit"><i class="fa fa-pencil"></i></a>
                                     @endcan
-                                    <a href="{{ route('password.index',['group'=>$group]) }}" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye"></i></a>
+                                    <a href="{{ route('password.index',['group'=>$group]) }}" class="btn btn-xs btn-info" title="View"><i class="fa fa-eye"></i></a>
                                     @can("destroy", $group)
-                                        <a href="{{ route('group.destroy', ["id" => $group->id]) }}" class="btn btn-sm btn-danger"  data-method="DELETE" data-confirm="Are you sure ?" data-token="{{ csrf_token() }}"><i class="fa fa-trash"></i></a>
+                                        <a href="{{ route('group.destroy', ["id" => $group->id]) }}" class="btn btn-xs btn-danger"  data-method="DELETE" data-confirm="Are you sure ?" data-token="{{ csrf_token() }}"><i class="fa fa-trash"></i></a>
                                     @endcan
                                 </td>
                             </tr>
