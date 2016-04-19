@@ -24,18 +24,22 @@
                             <td>Username</td>
                             <td>{{ $password->username }}&nbsp;<a href="#" class="btn btn-xs btn-default btn-clipboard" data-clipboard-text="{{ $password->username }}"><i class="fa fa-clipboard"></i></a></td>
                         </tr>
+                        @if(isset($password->email))
                         <tr>
                             <td>Email</td>
                             <td>{{ $password->email }}&nbsp;<a href="#" class="btn btn-xs btn-default btn-clipboard" data-clipboard-text="{{ $password->email }}"><i class="fa fa-clipboard"></i></a></td>
                         </tr>
+                        @endif
                         <tr>
                             <td>Password</td>
                             <td><a href="#" class="btn btn-xs btn-default btn-clipboard" data-clipboard-text="{{ $password->password }}"><i class="fa fa-clipboard"></i></a></td>
                         </tr>
+                        @if(isset($password->note))
                         <tr>
                             <td>Note</td>
                             <td>{{ $password->note }}</td>
                         </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>
