@@ -2,7 +2,7 @@
 @section('content')
     <div class="col-md-12">
     <div class="panel panel-default">
-        <div class="panel-heading">My groups</div>
+        <div class="panel-heading">My groups<a href="{{ route('group.create') }}" class="pull-right"><i class="fa fa-plus"></i></a></div>
         <div class="panel-body">
             <div class="table-responsive">
                 @if($groups->count() == 0)
@@ -28,10 +28,10 @@
                                     @endforeach
                                 </td>
                                 <td>
-                                    <a href="{{ route('password.index',['group'=>$group]) }}" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye"></i></a>
                                     @can("update", $group)
-                                        <a href="{{ route('group.edit', ['id'=>$group->id]) }}" class="btn btn-sm btn-warning" title="Edit"><i class="fa fa-pencil"></i></a>
+                                    <a href="{{ route('group.edit', ['id'=>$group->id]) }}" class="btn btn-sm btn-default" title="Edit"><i class="fa fa-pencil"></i></a>
                                     @endcan
+                                    <a href="{{ route('password.index',['group'=>$group]) }}" class="btn btn-sm btn-info" title="View"><i class="fa fa-eye"></i></a>
                                     @can("destroy", $group)
                                         <a href="{{ route('group.destroy', ["id" => $group->id]) }}" class="btn btn-sm btn-danger"  data-method="DELETE" data-confirm="Are you sure ?" data-token="{{ csrf_token() }}"><i class="fa fa-trash"></i></a>
                                     @endcan

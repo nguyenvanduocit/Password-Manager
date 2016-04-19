@@ -10,7 +10,9 @@
     </div>
     <div class="col-md-9">
     <div class="panel panel-default">
-        <div class="panel-heading">Passwords</div>
+        <div class="panel-heading">Passwords
+            <a href="{{ route('password.create') }}" class="pull-right"><i class="fa fa-plus"></i></a>
+        </div>
         <div class="panel-body">
             <div class="table-responsive">
                 @include('password.list')

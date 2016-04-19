@@ -2,7 +2,7 @@
 @section('content')
     <div class="col-md-12">
         <div class="panel panel-default">
-            <div class="panel-heading">Password Detail</div>
+            <div class="panel-heading">Password Detail <a href="{{ route('password.edit', ['id'=>$password->id]) }}" class="pull-right"><i class="fa fa-pencil"></i></a></div>
             <div class="panel-body">
                 <table class="table table-hover">
                     <thead>

@@ -4,10 +4,10 @@
 <table class="table table-hover">
 	<thead>
 	<tr>
-		<th>URL</th>
+		<th>Title</th>
 		<th>Username</th>
-		<th>Email</th>
 		<th class="text-center">Password</th>
+		<th>URL</th>
 		<th class="text-center">Actions</th>
 	</tr>
 	</thead>
@@ -16,8 +16,8 @@
 		<tr>
 			<td><a href="{{ $password->url }}" target="_blank">{{ $password->title }}</a></td>
 			<td>{{ $password->username }}&nbsp;<a href="#" class="btn btn-xs btn-default btn-clipboard" data-clipboard-text="{{ $password->username }}"><i class="fa fa-clipboard"></i></a></td>
-			<td>{{ $password->email }}&nbsp;<a href="#" class="btn btn-xs btn-default btn-clipboard" data-clipboard-text="{{ $password->email }}" data-toggle="popover"><i class="fa fa-clipboard"></i></a></td>
 			<td class="text-center"><a href="#" class="btn btn-sm btn-default btn-clipboard" data-clipboard-text="{{ $password->password }}" data-toggle="popover"><i class="fa fa-clipboard"></i></a></td>
+			<td class="text-center"><a href="{{ $password->url }}" target="_blank">{{ $password->url }}</a></td>
 			<td class="text-center">
 				@can("update", $password)
 					<a href="{{ route('password.edit', ['id'=>$password->id]) }}" class="btn btn-sm btn-default" title="Edit"><i class="fa fa-pencil"></i></a>
